@@ -43,13 +43,13 @@ AKC7QQqCt4s7qveBM4dAi3ivrRmLbCJuWF,1100000000
 
 **Note: The amount field should include the decimals!**
 
-## Example
+## Example
 
 ```
 npm start -- -f test.csv -a AMwHX7Ste8MhDNf3VuVR36greND8F67ets -p d9d1392ae21cbe8b910311b9c3016f8f995ac45c811d5896e5c2606fe01a45fb -t d01be91dd3d9c0f09cedef20298e73109a788397
 ```
 
-## Others
+## Others
 
 The gas price and limit has been setup with standard values:
 
