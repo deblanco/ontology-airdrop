@@ -24,7 +24,7 @@ npm start -- -f csvFile.csv -p senderAddressPrivateKey -a senderAddress -t token
 Options:
   -V, --version                  output the version number
   -f, --file <file>              file to parse location, should be a CSV with "address,amount" format
-  -p, --privateKey <privateKey>  sender private key
+  -p, --privateKey <privateKey>  sender private key (no support for WIF format yet)
   -a, --address <address>        sender address
   -t, --token <tokenContract>    token contract address
   -h, --help                     output usage information
