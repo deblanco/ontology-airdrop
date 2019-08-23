@@ -9,6 +9,8 @@ import {
 
 const gasPrice = '500'
 const gasLimit = '200000'
+const TESTNET_NODE = 'http://polaris4.ont.io:20334'
+const MAINNET_NODE = 'https://dappnode1.ont.io:10334'
 
 export function makeTransferMultiTx (
   tokenContract: string,
@@ -33,7 +35,7 @@ export function signTransaction (tx: Transaction, privateKey: string): void {
   TransactionBuilder.addSign(tx, pk)
 }
 
-export function execTransaction (tx: Transaction) {
-  const restClient = new RestClient('https://dappnode1.ont.io:10334')
+export function execTransaction (tx: Transaction, testnet: boolean) {
+  const restClient = new RestClient(testnet ? TESTNET_NODE : MAINNET_NODE)
   return restClient.sendRawTransaction(tx.serialize(), false)
 }

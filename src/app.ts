@@ -16,6 +16,7 @@ program
   .option('-p, --privateKey <privateKey>', 'sender private key')
   .option('-a, --address <address>', 'sender address')
   .option('-t, --token <tokenContract>', 'token contract address')
+  .option('-tn, --testnet', 'send through testnet')
   .parse(process.argv)
 
 const paramsList = ['file', 'privateKey', 'address', 'token']
@@ -45,7 +46,7 @@ function main () {
     csvContent
   )
   signTransaction(txMulti, program.privateKey)
-  execTransaction(txMulti).then(result => {
+  execTransaction(txMulti, program.testnet).then(result => {
     console.log('---- TRANSACTIONS DONE ----')
     console.log(JSON.stringify(result))
   })
