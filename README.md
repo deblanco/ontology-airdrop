@@ -24,9 +24,10 @@ npm start -- -f csvFile.csv -p senderAddressPrivateKey -a senderAddress -t token
 Options:
   -V, --version                  output the version number
   -f, --file <file>              file to parse location, should be a CSV with "address,amount" format
-  -p, --privateKey <privateKey>  sender private key (no support for WIF format yet)
+  -p, --privateKey <privateKey>  sender private key
   -a, --address <address>        sender address
   -t, --token <tokenContract>    token contract address
+  -tn, --testnet                 send through testnet
   -h, --help                     output usage information
 ```
 
@@ -46,7 +47,7 @@ AKC7QQqCt4s7qveBM4dAi3ivrRmLbCJuWF,1100000000
 ## Example
 
 ```
-npm start -- -f test.csv -a AMwHX7Ste8MhDNf3VuVR36greND8F67ets -p d9d1392ae21cbe8b910311b9c3016f8f995ac45c811d5896e5c2606fe01a45fb -t d01be91dd3d9c0f09cedef20298e73109a788397
+npm start -- -f test.csv -a AMwHX7Ste8MhDNf3VuVR36greND8F67ets -p d9d1392ae21cbe8b910311b9c3016f8f995ac45c811d5896e5c2606fe01a45fb -t d01be91dd3d9c0f09cedef20298e73109a788397 --testnet
 ```
 
 ## Others
