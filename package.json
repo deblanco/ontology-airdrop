@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^3.0.0",
-    "ontology-ts-sdk": "^1.0.18",
+    "ontology-ts-sdk": "^1.0.22",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
