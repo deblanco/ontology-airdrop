@@ -4,7 +4,8 @@ import program from 'commander'
 import {
   makeTransferMultiTx,
   signTransaction,
-  execTransaction
+  execTransaction,
+  makeTransferTxArr
 } from './transactionSender'
 
 program.version('v0.0.1')
@@ -17,6 +18,7 @@ program
   .option('-a, --address <address>', 'sender address')
   .option('-t, --token <tokenContract>', 'token contract address')
   .option('-tn, --testnet', 'send through testnet')
+  .option('-s, --single', 'uses single transfers instead of multi')
   .parse(process.argv)
 
 const paramsList = ['file', 'privateKey', 'address', 'token']
@@ -40,16 +42,34 @@ function main () {
     process.exit(0)
   }
 
-  const txMulti = makeTransferMultiTx(
-    program.token,
-    program.address,
-    csvContent
-  )
-  signTransaction(txMulti, program.privateKey)
-  execTransaction(txMulti, program.testnet).then(result => {
-    console.log('---- TRANSACTIONS DONE ----')
-    console.log(JSON.stringify(result))
-  })
+  if (program.single) {
+    const transfers = makeTransferTxArr(
+      program.token,
+      program.address,
+      csvContent
+    )
+
+    transfers.forEach(t => signTransaction(t, program.privateKey))
+
+    Promise.all(transfers.map(t => execTransaction(t, program.testnet))).then(
+      result => {
+        console.log('---- TRANSACTIONS DONE ----')
+        console.log(JSON.stringify(result))
+      }
+    )
+  } else {
+    const txMulti = makeTransferMultiTx(
+      program.token,
+      program.address,
+      csvContent
+    )
+
+    signTransaction(txMulti, program.privateKey)
+    execTransaction(txMulti, program.testnet).then(result => {
+      console.log('---- TRANSACTIONS DONE ----')
+      console.log(JSON.stringify(result))
+    })
+  }
 }
 
 main()

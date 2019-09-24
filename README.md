@@ -28,6 +28,7 @@ Options:
   -a, --address <address>        sender address
   -t, --token <tokenContract>    token contract address
   -tn, --testnet                 send through testnet
+  -s, --single                   uses single transfers instead of multi
   -h, --help                     output usage information
 ```
 
