@@ -11,10 +11,10 @@ const gasPrice = '500'
 const gasLimit = '3924288'
 const TESTNET_NODE = 'http://polaris4.ont.io:20334'
 const MAINNET_NODES = [
-  'https://dappnode1.ont.io:20334',
-  'https://dappnode2.ont.io:20334',
-  'https://dappnode3.ont.io:20334',
-  'https://dappnode4.ont.io:20334'
+  'http://dappnode1.ont.io:20334',
+  'http://dappnode2.ont.io:20334',
+  'http://dappnode3.ont.io:20334',
+  'http://dappnode4.ont.io:20334'
 ]
 
 const getMainnetNode = () => {
