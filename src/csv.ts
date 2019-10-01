@@ -2,7 +2,10 @@ import fs from 'fs'
 
 export function transformCsvToArray (path: string) {
   const fileContent = fs.readFileSync(path, { encoding: 'utf8' })
-  return fileContent.split('\n').map(r => r.split(','))
+  return fileContent
+    .replace(/(\r|\r\n)/g, '\n')
+    .split(/\n/)
+    .map(r => r.split(','))
 }
 
 export function isCsvFormatCorrect (arr: string[][]) {

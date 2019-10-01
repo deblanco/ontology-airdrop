@@ -57,8 +57,10 @@ The gas price and limit has been setup with standard values:
 
 ```javascript
 const gasPrice = '500';
-const gasLimit = '200000';
+const gasLimit = '3924288';
 ```
+
+The transactions are sent in batches of 400 transactions to not saturate the network and due to Multi transaction limits.
 
 ## Credits
 

@@ -7,6 +7,7 @@ import {
   execTransaction,
   makeTransferTxArr
 } from './transactionSender'
+import { splitArrayIntoChunks, sleep } from './util'
 
 program.version('v0.0.1')
 program
@@ -23,7 +24,7 @@ program
 
 const paramsList = ['file', 'privateKey', 'address', 'token']
 
-function main () {
+async function main () {
   if (paramsList.some(k => !program[k])) {
     paramsList.forEach(k => {
       if (!program[k]) {
@@ -51,24 +52,35 @@ function main () {
 
     transfers.forEach(t => signTransaction(t, program.privateKey))
 
-    Promise.all(transfers.map(t => execTransaction(t, program.testnet))).then(
-      result => {
+    const batches = splitArrayIntoChunks(transfers, 400)
+
+    for (const batch of batches) {
+      await Promise.all(
+        batch.map(t => execTransaction(t, program.testnet))
+      ).then(async result => {
         console.log('---- TRANSACTIONS DONE ----')
         console.log(JSON.stringify(result))
-      }
-    )
-  } else {
-    const txMulti = makeTransferMultiTx(
-      program.token,
-      program.address,
-      csvContent
-    )
 
-    signTransaction(txMulti, program.privateKey)
-    execTransaction(txMulti, program.testnet).then(result => {
-      console.log('---- TRANSACTIONS DONE ----')
-      console.log(JSON.stringify(result))
+        await sleep(1000)
+      })
+    }
+  } else {
+    const csvBatches = splitArrayIntoChunks(csvContent, 400)
+
+    const txsMulti = csvBatches.map(b => {
+      const txB = makeTransferMultiTx(program.token, program.address, b)
+      signTransaction(txB, program.privateKey)
+      return txB
     })
+
+    for (const batch of txsMulti) {
+      await execTransaction(batch, program.testnet).then(async result => {
+        console.log('---- TRANSACTIONS DONE ----')
+        console.log(JSON.stringify(result))
+
+        await sleep(1000)
+      })
+    }
   }
 }
 

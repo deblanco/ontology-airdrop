@@ -8,9 +8,18 @@ import {
 } from 'ontology-ts-sdk'
 
 const gasPrice = '500'
-const gasLimit = '200000'
+const gasLimit = '3924288'
 const TESTNET_NODE = 'http://polaris4.ont.io:20334'
-const MAINNET_NODE = 'https://dappnode1.ont.io:10334'
+const MAINNET_NODES = [
+  'https://dappnode1.ont.io:10334',
+  'https://dappnode2.ont.io:10334',
+  'https://dappnode3.ont.io:10334',
+  'https://dappnode4.ont.io:10334'
+]
+
+const getMainnetNode = () => {
+  return MAINNET_NODES[Math.floor(Math.random() * MAINNET_NODES.length)]
+}
 
 export function makeTransferMultiTx (
   tokenContract: string,
@@ -59,6 +68,8 @@ export function signTransaction (tx: Transaction, privateKey: string): void {
 }
 
 export function execTransaction (tx: Transaction, testnet: boolean) {
-  const restClient = new RestClient(testnet ? TESTNET_NODE : MAINNET_NODE)
+  const node = testnet ? TESTNET_NODE : getMainnetNode()
+  const restClient = new RestClient(node)
+  console.log('Sending transaction through:', node)
   return restClient.sendRawTransaction(tx.serialize(), false)
 }
